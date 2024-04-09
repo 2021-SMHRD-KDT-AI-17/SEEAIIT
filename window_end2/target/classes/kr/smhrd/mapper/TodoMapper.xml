@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.smhrd.mapper.TodoMapper">
+
+    <!-- 일정 추가 -->
+    <insert id="addTodoItem" parameterType="kr.smhrd.entity.Todo">
+        INSERT INTO todoList (date, content, completed, loginId)
+        VALUES (#{date}, #{content}, #{completed}, #{loginId})
+    </insert>
+
+<delete id="deleteTodoItem" parameterType="java.lang.Long">
+    DELETE FROM todoList
+    WHERE id = #{id}
+</delete>
+
+<select id="getTodoItemsByDate" resultType="kr.smhrd.entity.Todo">
+    SELECT * FROM todoList WHERE date = #{date}
+</select>
+<!-- 일정 완료 여부 변경 -->
+<update id="updateTodoItem" parameterType="map">
+    UPDATE todoList
+    SET completed = #{completed}
+    WHERE id = #{id}
+</update>
+
+    <select id="getIncompleteTodoItemsByDate" resultType="kr.smhrd.entity.Todo">
+        SELECT * FROM todoList WHERE date = #{date} AND completed = false
+    </select>
+
+    <!-- 일정 완료 여부 변경 -->
+    <update id="toggleTodoCompletion" parameterType="kr.smhrd.entity.Todo">
+        UPDATE todoList
+        SET completed = #{completed}
+        WHERE id = #{id}
+    </update>
+    
+    <select id="getAllTodoItems" resultType="kr.smhrd.entity.Todo">
+        SELECT * FROM todoList
+    </select>
+
+</mapper>

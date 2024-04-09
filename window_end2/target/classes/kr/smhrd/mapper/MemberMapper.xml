@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.MemberMapper">
+
+	<insert id="memberInsert" parameterType="kr.smhrd.entity.Member">
+		insert into user_info values(0,#{id},#{pw},#{name},#{email},#{tel},#{birthday},0,0)
+	</insert>
+	
+	<select id="memberSelect" parameterType="kr.smhrd.entity.Member" resultType="kr.smhrd.entity.Member">
+		select * from user_info where id=#{id} and pw=#{pw}
+	</select>
+	
+	<update id="memberUpdate" parameterType="kr.smhrd.entity.Member">
+		update user_info set pw=#{pw}, tel=#{tel} where id=#{id}
+	</update>
+	
+	<select id="goShowMember" resultType="kr.smhrd.entity.Member">
+		select * from user_info where not(rank_num=2) order by name
+	</select>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from user_info where id=#{id}
+	</delete>
+	
+	<select id="goTeacherMember" resultType="kr.smhrd.entity.Member">
+		select * from user_info where not(rank_num=2)
+	</select>
+	
+	<update id="rankUpdate" parameterType="kr.smhrd.entity.Member">
+		update user_info set rank_num=1 where id=#{id}
+	</update>
+	
+	<insert id="intime" parameterType="kr.smhrd.entity.Attendance">
+		insert into Attendance(name, in_time) values (#{name},Now())
+	</insert>
+	
+	<insert id="outtime" parameterType="kr.smhrd.entity.Attendance">
+		insert into Attendance2(name, out_time) values (#{name},Now())
+	</insert>
+	
+	<select id="selectAtt1" resultType="kr.smhrd.entity.Attendance">
+		select * from Attendance
+	</select>
+	
+	<select id="selectAtt2" resultType="kr.smhrd.entity.Attendance">
+		select * from Attendance2
+	</select>
+
+</mapper>

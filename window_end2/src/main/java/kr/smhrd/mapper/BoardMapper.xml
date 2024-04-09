@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.BoardMapper">
+
+   <insert id="insertBoard" parameterType="kr.smhrd.entity.Board">
+      INSERT INTO BOARD(title, writer, filename, content) 
+        VALUES(#{title}, #{writer}, #{filename}, #{content})
+   </insert> 
+   
+   <select id="boardList" resultType="kr.smhrd.entity.Board">
+      select * from board order by b_date desc
+   </select>
+   
+   <select id="boardContent" parameterType="int" resultType="kr.smhrd.entity.Board">
+      select * from board where num = #{num}
+   </select>
+   
+   <delete id="deleteBoard" parameterType="int">
+      delete from board where num = #{num}
+   </delete>
+
+   <update id="boardCount" parameterType="int">
+      update board set count=count+1 where num=#{num}
+   </update>
+   
+   <select id="selectBoard" parameterType="String" resultType="kr.smhrd.entity.Board">
+      select * from board where title like #{select} order by b_date desc
+   </select>
+   
+   <insert id="commentJoin" parameterType="kr.smhrd.entity.Comment">
+      insert into comment values(#{number},#{writer}, #{comment})
+   </insert> 
+   
+   <select id="selectComment" parameterType="int" resultType="kr.smhrd.entity.Comment">
+      select * from comment where num=#{number}
+   </select>
+
+</mapper>
+

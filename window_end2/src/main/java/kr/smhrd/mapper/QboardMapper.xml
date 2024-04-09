@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.QboardMapper">
+   
+   <select id="qbaordList" resultType="kr.smhrd.entity.Qboard">
+      select * from qboard_info order by qb_dt desc
+   </select>
+   
+   <insert id="insertQboard" parameterType="kr.smhrd.entity.Qboard">
+      insert into qboard_info(qb_title,user_id,qb_file,qb_content,qb_dt,qb_views) values(#{qb_title},#{user_id},#{qb_file},#{qb_content},Now(),0)
+   </insert>
+   
+   <update id="qboardCount" parameterType="int">
+      update qboard_info set qb_views=qb_views+1 where qb_idx=#{qb_idx}
+   </update>
+   
+   <select id="qboardContent" parameterType="int" resultType="kr.smhrd.entity.Qboard">
+      select * from qboard_info where qb_idx=#{qb_idx}
+   </select>
+   
+   <select id="selectQboardComment" parameterType="int" resultType="kr.smhrd.entity.QboardComment">
+      select * from qboard_comment where qb_idx=#{num} order by cmt_dt desc
+   </select>
+   
+   <insert id="qboardCommentJoin" parameterType="kr.smhrd.entity.QboardComment">
+      insert into qboard_comment(qb_idx,cmt_content,user_id,cmt_dt) values(#{qb_idx},#{cmt_content},#{user_id},Now())
+   </insert>
+   
+   <select id="selectQboard" parameterType="String" resultType="kr.smhrd.entity.Qboard">
+      select * from qboard_info where qb_title like #{select1} order by qb_dt desc
+   </select>
+   
+   <update id="qboardUpdate" parameterType="kr.smhrd.entity.Qboard">
+      update qboard_info set qb_title=#{qb_title}, qb_content=#{qb_content}, qb_file=#{qb_file} where qb_idx=#{qb_idx} 
+   </update>
+   
+   <delete id="deleteQboard" parameterType="int">
+      delete from qboard_info where qb_idx = #{qb_idx}
+   </delete>
+   
+   <delete id="deleteQboardComment" parameterType="int">
+      delete from qboard_comment where qb_idx = #{qb_idx}
+   </delete>
+
+
+</mapper>

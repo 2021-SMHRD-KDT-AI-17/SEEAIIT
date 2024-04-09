@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.AdminMessageMapper">
+
+	<insert id="sendMessage" parameterType="kr.smhrd.entity.AdminMessage">
+		insert into message_info(user_id, catagory,message_title, message) values(#{user_id},#{catagory},#{message_title},#{message})
+	</insert>
+	
+	<select id="selectMessage" resultType="kr.smhrd.entity.AdminMessage">
+		select * from message_info order by message_dt desc
+	</select>
+	
+	<select id="selectMessageDetail" parameterType="int" resultType="kr.smhrd.entity.AdminMessage">
+		select * from message_info where message_idx=#{message_idx}
+	</select>
+
+
+</mapper>

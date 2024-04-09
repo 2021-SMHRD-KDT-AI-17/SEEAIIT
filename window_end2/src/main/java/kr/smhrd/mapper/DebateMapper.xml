@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.DebateMapper">
+
+   <select id="debateList" resultType="kr.smhrd.entity.Debate">
+      select * from debate_info order by d_dt desc
+   </select>
+   
+   <insert id="insertDebate" parameterType="kr.smhrd.entity.Debate">
+      insert into debate_info(d_title,user_id,d_file,d_content,d_dt,d_views) values(#{d_title},#{user_id},#{d_file},#{d_content},Now(),0)
+   </insert>
+   
+   <update id="debateCount" parameterType="int">
+      update debate_info set d_views=d_views+1 where d_idx=#{d_idx}
+   </update>
+   
+   <select id="debateContent" parameterType="int" resultType="kr.smhrd.entity.Debate">
+      select * from debate_info where d_idx=#{d_idx}
+   </select>
+   
+   <select id="selectDebateComment" parameterType="int" resultType="kr.smhrd.entity.DebateComment">
+      select * from debate_comment where d_idx=#{d_idx} order by cmt_dt desc
+   </select>
+   
+   <insert id="debateCommentJoin" parameterType="kr.smhrd.entity.DebateComment">
+      insert into debate_comment(d_idx,cmt_content,user_id,cmt_dt) values(#{d_idx},#{cmt_content},#{user_id},Now())
+   </insert>
+   
+   <select id="selectDebate" parameterType="String" resultType="kr.smhrd.entity.Debate">
+      select * from debate_info where d_title like #{select2} order by d_dt desc
+   </select>
+   
+   <update id="debateUpdate" parameterType="kr.smhrd.entity.Debate">
+      update debate_info set d_title=#{d_title}, d_content=#{d_content}, d_file=#{d_file} where d_idx=#{d_idx}
+   </update>
+   
+   <delete id="deleteDebate" parameterType="int">
+      delete from debate_info where d_idx = #{d_idx}
+   </delete>
+   
+   <delete id="deleteDebateComment" parameterType="int">
+      delete from debate_comment where d_idx = #{d_idx}
+   </delete>
+
+
+
+
+</mapper>

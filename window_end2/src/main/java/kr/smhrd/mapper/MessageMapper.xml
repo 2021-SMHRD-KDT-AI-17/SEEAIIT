@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.MessageMapper">
+
+	<insert id="messageSend" parameterType="kr.smhrd.entity.Message">
+		insert into message(sendE, receiveE, message) values(#{sendE},#{receiveE},#{message})
+	</insert>
+	
+	<select id="messageList" parameterType="String" resultType="kr.smhrd.entity.Message">
+		select * from message where receiveE=#{email}
+	</select>
+	
+	<delete id="deleteMessage" parameterType="int">
+		delete from message where num=#{num}
+	</delete>
+
+		<delete id="deleteAllMessage" parameterType="String">
+		delete from message where receiveE=#{email}
+	</delete>
+</mapper>

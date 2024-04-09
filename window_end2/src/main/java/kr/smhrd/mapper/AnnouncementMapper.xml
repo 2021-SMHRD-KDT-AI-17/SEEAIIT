@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.AnnouncementMapper">
+
+   <select id="annList" resultType="kr.smhrd.entity.Announcement">
+      select * from announcement_info order by ann_dt desc
+   </select>
+
+   <insert id="insertAnnouncement" parameterType="kr.smhrd.entity.Announcement">
+      insert into announcement_info(ann_title, ann_content, teacher_id, ann_dt) values(#{ann_title}, #{ann_content}, #{teacher_id},Now())
+   </insert>
+   
+   <select id="announcementdetail" parameterType="int" resultType="kr.smhrd.entity.Announcement">
+      select * from announcement_info where ann_idx=#{ann_idx}
+   </select>
+
+</mapper>

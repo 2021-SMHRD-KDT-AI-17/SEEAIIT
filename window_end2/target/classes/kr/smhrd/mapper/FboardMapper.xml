@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.FboardMapper">
+
+   <select id="fboardList" resultType="kr.smhrd.entity.Fboard">
+      select * from fboard_info order by fb_dt desc
+   </select>
+   
+   <insert id="insertFboard" parameterType="kr.smhrd.entity.Fboard">
+      insert into fboard_info(fb_title,user_id,fb_file,fb_content,fb_dt,fb_views) values(#{fb_title},#{user_id},#{fb_file},#{fb_content},Now(),0)
+   </insert>
+   
+   <update id="fboardCount" parameterType="int">
+      update fboard_info set fb_views=fb_views+1 where fb_idx=#{fb_idx}
+   </update>
+   
+   <select id="fboardContent" parameterType="int" resultType="kr.smhrd.entity.Fboard">
+      select * from fboard_info where fb_idx=#{fb_idx}
+   </select>
+   
+   <select id="selectFboardComment" parameterType="int" resultType="kr.smhrd.entity.FboardComment">
+      select * from fboard_comment where fb_idx=#{fb_idx} order by cmt_dt desc
+   </select>
+   
+   <insert id="fboardCommentJoin" parameterType="kr.smhrd.entity.FboardComment">
+      insert into fboard_comment(fb_idx,cmt_content,user_id,cmt_dt) values(#{fb_idx},#{cmt_content},#{user_id},Now())
+   </insert>
+   
+   <select id="selectFboard" parameterType="String" resultType="kr.smhrd.entity.Fboard">
+      select * from fboard_info where fb_title like #{select3} order by fb_dt desc
+   </select>
+   
+   <update id="fboardUpdate">
+      update fboard_info set fb_title=#{fb_title}, fb_content=#{fb_content}, fb_file=#{fb_file} where fb_idx=#{fb_idx}
+   </update>
+   
+   <delete id="deleteFboard">
+      delete from fboard_info where fb_idx = #{fb_idx}
+   </delete>
+   
+   <delete id="deleteFboardComment">
+      delete from fboard_comment where fb_idx = #{fb_idx}
+   </delete>
+
+</mapper>
